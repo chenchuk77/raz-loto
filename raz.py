@@ -32,6 +32,27 @@ def fast_combination_set6(options):
     print(strftime("%Y-%m-%d %H:%M:%S", gmtime()) + ' - done, ' +str(len(result))+ ' combinations.' )
     return len(result), result
 
+# generates all triples
+def fast_combination_set3(options):
+    print(strftime("%Y-%m-%d %H:%M:%S", gmtime()) + ' - generating 3 balls in ' +str(options)+ ' options...')
+    result=set()
+    for i in range(options):
+        for j in range(options):
+            if j==i: break
+            for k in range(options):
+                if k==i or k==j: break
+                unique_numbers = set()
+                unique_numbers.add(i+1)
+                unique_numbers.add(j+1)
+                unique_numbers.add(k+1)
+                if len(unique_numbers) == 3:
+                    result.add(tuple(sorted((i+1, j+1, k+1))))
+    print(strftime("%Y-%m-%d %H:%M:%S", gmtime()) + ' - done, ' +str(len(result))+ ' combinations.' )
+    return len(result), result
+
+
+
+
 # helper
 def show_combinations(set, count):
     for i, val in enumerate(random.sample(set, count)):
@@ -60,6 +81,23 @@ def random_guess():
     while len(guess) < 6:
         guess.add(random.randint(1, 37))
     return tuple(sorted(list(guess)))
+
+# (1,2,3), (1,2,3,4,5,6)
+def is_in_guess(triple, guess):
+    triple_as_set = set(triple)
+    return triple_as_set.issubset(guess)
+
+
+
+def remove_known_triples(guess, triples):
+    for triple in triples:
+        if is_in_guess(triple, guess):
+            triples.remove(triple)
+
+
+
+
+
 
 # test number of guesses if appears in set
 def test(number_of_guesses, result_set, show_guesses=False):

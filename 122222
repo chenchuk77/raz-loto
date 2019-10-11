@@ -1,0 +1,7 @@
+
+>>> def remove_known_triples(triples_to_remove, triples):
+...   for triple in triples_to_remove:
+...     triples.remove(triple)
+...   return triples
+
+

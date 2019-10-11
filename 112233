@@ -1,0 +1,6 @@
+
+
+define is_in_guess(triple, guess):
+  triple_as_set = set(triple)
+  triple_as_set.issubset(guess)
+
