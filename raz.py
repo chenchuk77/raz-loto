@@ -113,6 +113,18 @@ def find_included_triples(guess):
     print(strftime("%Y-%m-%d %H:%M:%S", gmtime()) + ' - done, ' +str(len(result))+ ' combinations.' )
     return len(result), result
 
+# mutates the triples set
+def build_guess(triples):
+    guess = set()
+    while len(guess) < 6:
+        triple = triples.pop()
+        for number in triple:
+            if len(guess) >= 6:
+                break
+            guess.add(number)
+    return tuple(sorted(guess))
+
+
 
 
 
@@ -138,6 +150,7 @@ def test(number_of_guesses, result_set, show_guesses=False):
     print ('total misses: {}'.format(len(misses)))
 
 
+
 def main():
 
     # creating all triples
@@ -150,8 +163,26 @@ def main():
     print('length after: ' + str(len(triples)))
 
     g = random_guess()
-    inner_triples = find_included_triples(g)[1]
+    triples = remove_known_triples([g], triples)
+    # 2nd time - no effect
+    triples = remove_known_triples([g], triples)
+    # unknown numbers - no effect
+    triples = remove_known_triples([(44,45,56,78,88,97)], triples)
+    print('length after remove 1 guesses triples : ' + str(len(triples)))
 
+    new_guess = build_guess(triples)
+    print('new guess: ' + str(new_guess))
+    print('length after removing new guesses triples: ' + str(len(triples)))
+
+    new_guess = build_guess(triples)
+    print('new guess: ' + str(new_guess))
+    print('length after removing new guesses triples: ' + str(len(triples)))
+
+    new_guess = build_guess(triples)
+    print('new guess: ' + str(new_guess))
+    print('length after removing new guesses triples: ' + str(len(triples)))
+
+    pass
     # x={1,2,3,4}
     # y = x.copy()
     #y = x
